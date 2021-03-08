@@ -1,5 +1,5 @@
 /*
-摆动序列
+分割回文串
 easy
 medium *
 hard
@@ -21,23 +21,38 @@ hard
 using namespace std;
 
 class Solution {
+  private:
+    vector<vector<int>> f;
+    vector<vector<string>> ret;
+    vector<string> ans;
+    int n;
+
   public:
-    int wiggleMaxLength(vector<int> &nums) {
-        int len = nums.size();
-        if (len <= 1) {
-            return len;
+    void dfs(const string &s, int i) {
+        if (i == n) {
+            ret.push_back(ans);
+            return;
         }
-        int res = 1;
-        int preDiff = 0;
-        int curDiff = 0;
-        for (int i = 0; i < len - 1; ++i) {
-            curDiff = nums[i + 1] - nums[i];
-            if ((preDiff >= 0 && curDiff < 0) ||
-                (preDiff <= 0 && curDiff > 0)) {
-                ++res;
-                preDiff = curDiff;
+        for (int j = i; j < n; ++j) {
+            if (f[i][j]) {
+                ans.push_back(s.substr(i, j - i + 1));
+                dfs(s, j + 1);
+                ans.pop_back();
             }
         }
-        return res;
+    }
+
+    vector<vector<string>> partition(string s) {
+        n = s.size();
+        f.assign(n, vector<int>(n, true));
+
+        for (int i = n - 1; i >= 0; --i) {
+            for (int j = i + 1; j < n; ++j) {
+                f[i][j] = (s[i] == s[j]) && f[i + 1][j - 1];
+            }
+        }
+
+        dfs(s, 0);
+        return ret;
     }
 };
