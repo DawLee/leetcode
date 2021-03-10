@@ -1,3 +1,10 @@
+/*
+监控二叉树
+easy
+medium
+hard   *
+*/
+
 #include <algorithm>
 #include <iostream>
 #include <list>
@@ -13,7 +20,15 @@
 #include <vector>
 using namespace std;
 
+// Definition for a binary tree node.
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
 class Solution {
   public:
-    int lengthOfLIS(vector<int> &nums) {}
+    int minCameraCover(TreeNode *root) {}
 };
