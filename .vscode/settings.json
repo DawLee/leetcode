@@ -5,6 +5,8 @@
         "unordered_map": "cpp",
         "*.tcc": "cpp",
         "deque": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "unordered_set": "cpp",
+        "new": "cpp"
     }
 }
