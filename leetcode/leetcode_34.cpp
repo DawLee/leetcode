@@ -13,6 +13,7 @@
 #include <vector>
 using namespace std;
 
+// 使用库函数
 class Solution {
   public:
     vector<int> searchRange(vector<int> &nums, int target) {
@@ -20,37 +21,46 @@ class Solution {
         if (nums.empty()) {
             return res;
         }
-        res[0] = binarySearch(nums, target, true);
-        res[1] = binarySearch(nums, target, false);
+        auto tmp = lower_bound(nums.begin(), nums.end(), target);
+        if (tmp == nums.end() || nums[tmp - nums.begin()] != target) {
+            return res;
+        } else {
+            res[0] = tmp - nums.begin();
+        }
+        res[1] =
+            upper_bound(nums.begin(), nums.end(), target) - nums.begin() - 1;
         return res;
     }
-    int binarySearch(vector<int> &nums, int target, bool flag) {
-        // flag = true,查找第一个target
-        // flag = false,查找最后一个target
-        int len = nums.size();
+};
+
+class Solution {
+  public:
+    vector<int> searchRange(vector<int> &nums, int target) {
+        vector<int> res(2, -1);
+        if (nums.empty()) {
+            return res;
+        }
+        int left = bigEqualFirstNum(nums, target);
+        if (left >= nums.size() || nums[left] != target) {
+            return res;
+        }
+        cout << left << endl;
+        res[0] = left;
+        res[1] = bigEqualFirstNum(nums, target + 1) - 1;
+        return res;
+    }
+    // 查找 大于等于/大于 target的第一个元素
+    int bigEqualFirstNum(const vector<int> &vec, const int &target) {
         int left = 0;
-        int right = len - 1;
+        int right = vec.size();
         int mid = 0;
-        bool res = false;
-        while (left <= right) {
+        while (left < right) {
             mid = left + (right - left) / 2;
-            if (nums[mid] == target) {
-                res = true;
-                if (flag) {
-                    right = mid - 1;
-                } else {
-                    left = mid + 1;
-                }
-            } else if (nums[mid] < target) {
+            if (vec[mid] < target) {
                 left = mid + 1;
             } else {
-                right = mid - 1;
+                right = mid;
             }
-        }
-        if (!res) {
-            return -1;
-        } else if (!flag) {
-            return max(0, left - 1);
         }
         return left;
     }
