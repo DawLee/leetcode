@@ -73,3 +73,35 @@ class Solution {
         return res;
     }
 };
+
+class Solution {
+  public:
+    ListNode *rotateRight(ListNode *head, int k) {
+        if (nullptr == head) {
+            return head;
+        }
+        int len = 0;
+        ListNode *tmp = head;
+        while (nullptr != tmp) {
+            ++len;
+            tmp = tmp->next;
+        }
+        k = len - k % len;
+        if (k == 0 || k == len) {
+            return head;
+        }
+        tmp = head;
+        ListNode *oldHead = head;
+        while (--k > 0) {
+            tmp = tmp->next;
+        }
+        head = tmp->next;
+        tmp->next = nullptr;
+        tmp = head;
+        while (nullptr != tmp->next) {
+            tmp = tmp->next;
+        }
+        tmp->next = oldHead;
+        return head;
+    }
+};
