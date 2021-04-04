@@ -13,6 +13,10 @@
         "string_view": "cpp",
         "initializer_list": "cpp",
         "utility": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "list": "cpp",
+        "set": "cpp",
+        "stack": "cpp",
+        "cmath": "cpp"
     }
 }
